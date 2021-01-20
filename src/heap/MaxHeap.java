@@ -22,7 +22,7 @@ public class MaxHeap<T extends Comparable<T>> {
     public MaxHeap(T[] arr) {
         heap = new Array<>(arr);
         if (arr.length != 1) {
-            //从最后一个非叶子节点开始，逐个siftDown
+            // 从最后一个非叶子节点开始，逐个siftDown
             for(int i = getParentIndex(arr.length - 1); i >= 0; i--) {
                 siftDown(i);
             }

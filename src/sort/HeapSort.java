@@ -31,7 +31,7 @@ public class HeapSort {
 
         // 执行交换
         for (int i = data.length - 1; i >= 0; i--) {
-            swap(data, 0, i);
+            SortingHelper.swap(data, 0, i);
             siftDown(data, 0, i);
         }
     }
@@ -44,15 +44,9 @@ public class HeapSort {
             if (data[k].compareTo(data[j]) > 0) break;
 
             // swap
-            swap(data, k, j);
+            SortingHelper.swap(data, k, j);
             k = j;
         }
-    }
-
-    public static <T> void swap(T[] data, int i, int j) {
-        T temp = data[i];
-        data[i] = data[j];
-        data[j] = temp;
     }
 
     public static void main(String[] args) {

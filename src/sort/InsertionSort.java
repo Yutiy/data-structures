@@ -9,17 +9,8 @@ public class InsertionSort {
     private InsertionSort() {}
 
     public static <T extends Comparable<T>> void sort(T[] data) {
-        for(int i = 1; i < data.length; i++) {
-            T ele = data[i];
-            int j = i - 1;
-
-            while(j >= 0 && data[j].compareTo(ele) > 0) {
-                SortingHelper.swap(data, j + 1, j);
-                j--;
-            }
-
-            data[j] = ele;
-        }
+        int len = data.length;
+        sort(data, 0, len - 1);
     }
 
     public static <T extends Comparable<T>> void sort(T[] data, int l, int r) {

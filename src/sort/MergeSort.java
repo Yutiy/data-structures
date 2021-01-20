@@ -8,14 +8,21 @@ package sort;
 public class MergeSort {
     private MergeSort() {}
 
-    public static <T extends Comparable<T>> void sort(T[] data) {
-        int len = data.length;
+    public static <T extends Comparable<T>> void sort(T[] arr) {
+        sort(arr, 0, arr.length - 1);
     }
 
-    private static <T extends Comparable<T>> void _merge(T[] data, int start, int end) {
-        if (data.length > 2) {
+    public static <T extends Comparable<T>> void sort(T[] arr, int l, int r) {
+        if (l < r) return;
 
-        }
+        int pivot = (r - l) / 2 + l;
+        sort(arr, l, pivot);
+        sort(arr, pivot, r);
+
+    }
+
+    private static <T extends Comparable<T>> void _merge(T[] left, T[] right) {
+
     }
 
     public static void main(String[] args) {
