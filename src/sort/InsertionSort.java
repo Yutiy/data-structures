@@ -16,10 +16,10 @@ public class InsertionSort {
     public static <T extends Comparable<T>> void sort(T[] data, int l, int r) {
         for(int i = l + 1; i <= r; i++) {
             T ele = data[i];
-            int j = i - 1;
+            int j = i;
 
-            while(j >= 0 && data[j].compareTo(ele) > 0) {
-                SortingHelper.swap(data, j + 1, j);
+            while(data[j - 1].compareTo(ele) > 0) {
+                SortingHelper.swap(data, j - 1, j);
                 j--;
             }
 
