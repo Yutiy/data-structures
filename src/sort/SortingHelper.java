@@ -1,5 +1,7 @@
 package sort;
 
+import java.lang.reflect.Method;
+import java.lang.Class;
 import java.util.Random;
 
 /**
@@ -14,6 +16,14 @@ public class SortingHelper {
         T temp = data[i];
         data[i] = data[j];
         data[j] = temp;
+    }
+
+    public static void printArray(Object[] arr) {
+        for (Object o : arr) {
+            System.out.print(o);
+            System.out.print(' ');
+        }
+        System.out.println();
     }
 
     public static <T extends Comparable<T>> boolean isSorted(T[] data) {
@@ -34,17 +44,45 @@ public class SortingHelper {
         return arr;
     }
 
-    public static <T extends Comparable<T>> void sortTest(String sortName, T[] data) throws Throwable {
-        long startTime = System.nanoTime();
-        Integer[] a = {1, 2, 4, 6, 5, 3};
-        Class.forName(sortName).getDeclaredMethod("test1", Object[].class).invoke(null, (Object) a);
+    // 生成一个近乎有序的数组
+    // 首先生成一个含有[0...n-1]的完全有序数组, 之后随机交换swapTimes对数据
+    // swapTimes定义了数组的无序程度:
+    // swapTimes == 0 时, 数组完全有序
+    // swapTimes 越大, 数组越趋向于无序
+    public static Integer[] generateNearlyOrderedArray(int n, int swapTimes){
+        Integer[] arr = new Integer[n];
+        for( int i = 0 ; i < n ; i ++ )
+            arr[i] = i;
 
-        long endTime = System.nanoTime();
-        double time = endTime - startTime / 1000000000.0;
-
-        if (!SortingHelper.isSorted(data)) {
-            throw new RuntimeException("sort failed");
+        for( int i = 0 ; i < swapTimes ; i ++ ){
+            int a = (int)(Math.random() * n);
+            int b = (int)(Math.random() * n);
+            int t = arr[a];
+            arr[a] = arr[b];
+            arr[b] = t;
         }
-        System.out.println(time + "s");
+
+        return arr;
+    }
+
+    public static <T extends Comparable<T>> void sortTest(String sortName, T[] data) {
+        try {
+            // 通过sortClassName获得排序函数的Class对象
+            Class sortClass = Class.forName(sortName);
+            // 通过排序函数的Class对象获得排序方法
+            Method sortMethod = sortClass.getMethod("sort", new Class[]{Comparable[].class});
+            // 排序参数只有一个，是可比较数组arr
+            Object[] params = new Object[]{data};
+
+            long startTime = System.nanoTime();
+            sortMethod.invoke(null, params);
+            long endTime = System.nanoTime();
+
+            assert isSorted(data);
+            double time = endTime - startTime / 1000000000.0;
+            System.out.println(sortClass.getSimpleName()+ " : " + time + "s");
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
