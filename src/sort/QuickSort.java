@@ -9,7 +9,7 @@ public class QuickSort {
     private QuickSort() {}
 
     // 对arr[l...r]部分进行partition操作
-    // 返回p, 使得arr[l...p-1] < arr[p]; arr[p+1...r] > arr[p]
+    // 返回p, 使得arr[l...p-1] < arr[p]; arr[p+1...r] >= arr[p]
     private static <T extends Comparable<T>> int partition(T[] arr, int l, int r){
         // 随机在arr[l...r]的范围中, 选择一个数值作为标定点pivot
         SortingHelper.swap(arr, l, (int)(Math.random()*(r - l + 1)) + l);

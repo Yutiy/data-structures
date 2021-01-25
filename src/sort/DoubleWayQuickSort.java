@@ -8,7 +8,7 @@ public class DoubleWayQuickSort {
         SortingHelper.swap(data, l, (int)(Math.random()*(r - l + 1)) + l);
 
         int i = l + 1;
-        int j = l;
+        int j = r;
         T pivot = data[l];
 
         while(true) {
@@ -33,11 +33,10 @@ public class DoubleWayQuickSort {
     }
 
     public static <T extends Comparable<T>> void sort(T[] data, int l, int r) {
-        if (l >= r) return;
-        /*if (r - l <= 15) {
+        if (r - l <= 15) {
             InsertionSort.sort(data, l, r);
             return;
-        }*/
+        }
 
         int pivot = partition(data, l, r);
         sort(data, l, pivot - 1);
@@ -51,7 +50,7 @@ public class DoubleWayQuickSort {
 
     public static void main(String[] args) {
         Integer[] data = {1, 3, 2, 5, 6, 4};
-        QuickSort.sort(data);
+        DoubleWayQuickSort.sort(data);
 
         for (int ele : data) {
             System.out.print(ele + "");

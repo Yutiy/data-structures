@@ -9,10 +9,10 @@ public class BinarySearch {
     private BinarySearch() {}
 
     public static <T extends Comparable<T>> int search(T[] data, T target) {
-        int length = data.length;
-        int l = 0;
-        int r = length - 1;
+        return search(data, target, 0, data.length - 1);
+    }
 
+    public static <T extends Comparable<T>> int search(T[] data, T target, int l, int r) {
         // 区间为[l,r]
         while(l <= r) {
             int mid = l + (r - l) / 2;
@@ -27,8 +27,16 @@ public class BinarySearch {
         return -1;
     }
 
-    public static <T extends Comparable<T>> void search1(T[] data, T target, int l, int r) {
+    public static <T extends Comparable<T>> int searchCur(T[] data, T target, int l, int r) {
+        if (l > r) return -1;
 
+        int mid = l + (r - l) / 2;
+        if (data[mid].compareTo(target) == 0) return mid;
+        if (data[mid].compareTo(target) < 0) {
+            return searchCur(data, target, mid + 1, r);
+        } else {
+            return searchCur(data, target, 0, mid - 1);
+        }
     }
 
     public static void main(String[] args) {
